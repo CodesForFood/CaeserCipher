@@ -26,9 +26,8 @@ namespace CaeserCipher
             using (var reader = new StreamReader(OpenedFile))
             {
                 TextBuffer = reader.ReadToEnd();
-                LineBuffer = TextBuffer.Split(new char[] { '\n', 'n' }, StringSplitOptions.RemoveEmptyEntries);
+                LineBuffer = TextBuffer.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
             }
-
 
         }            
 

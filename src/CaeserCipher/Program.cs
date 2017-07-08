@@ -13,64 +13,137 @@ namespace CaeserCipher
         //encrypt and decrypt
         //load de/encrypted files
         //Break each sentence and restructer
+
         
-        
-        static public string PlainText{ get; set; }
-        static string menu = "<1>Encrypt file" +
+
+        static public FileInfo CurrentFile{ get; set; }
+        static public DirectoryInfo CurrentDir { get; set; }
+   
+
+
+        static string _menu = "<1>Encrypt file" +
                     "\n<2>Decrypt file" +
-                    "\n<3>View file";
+                    "\n<3>View file" +
+                    "\n<4>Change file" +
+                    "\n<5>Change Directory" +
+                    "\n<99>Quit Application";
+
+
+
 
 
         static void Main(string[] args)
         {
 
+            ChangeDir();
+            ChangeFile();
+            ProgramLoop();
+
+        }
+
+        static void ChangeDir()
+        {
             
-            string currentDir = Directory.GetCurrentDirectory();
-            DirectoryInfo directory = new DirectoryInfo(currentDir);
-            int choice = 0;
+            Console.WriteLine("What directory are the files in?");
+            string input = Console.ReadLine();
+            var dir = new DirectoryInfo(input);
 
+            if (dir.Exists)
+            {
+                CurrentDir = dir;
+            }
+            else
+            {
+                Console.WriteLine("404");
+                ChangeDir();
+            }
+
+            
+        }
+
+        static void ChangeFile()
+        {
+            string input;
+
+            Console.WriteLine("Looking in: " + CurrentDir.FullName);
             Console.WriteLine("What file are you looking for?");
-            PlainText = Console.ReadLine();
-            var fileName = Path.Combine(directory.FullName, PlainText + ".txt");//get full file name           
-            var file = new FileInfo(fileName);
-           
-          
-          
-                Console.WriteLine(menu);
-                choice = int.Parse(Console.ReadLine());
+            input = Console.ReadLine();
 
+            var fileName = Path.Combine(CurrentDir.FullName, input + ".txt");//get full file name           
+            var file = new FileInfo(fileName);
+
+            if (file.Exists)
+            { 
+                CurrentFile = file;
+            }
+            else
+            {
+                Console.WriteLine("404");
+                ChangeFile();
+            }
+        }
+
+        static void ProgramLoop()
+        {
+            
+
+            Console.WriteLine(_menu);
+
+           
+            int.TryParse(Console.ReadLine(),out int choice);           
+
+            if (choice != 0)
+            {
                 if (choice == 1)
                 {
-                    var cCipher = new Cipher(file);                    
+                    var cCipher = new Cipher(CurrentFile);
                     cCipher.Encrypt();
-                    Console.WriteLine("File has been Encrypted");
+                    Console.WriteLine("Success, File \"encrypted.txt\" has been created");
+                    ProgramLoop();
 
                 }
-                else if(choice == 2)
+                else if (choice == 2)
                 {
-                    var key = new Key(file);
+                    var key = new Key(CurrentFile);
                     key.Decrypt();
-                    key.ToConsole();
+                    //key.ToConsole();
+                    Console.WriteLine("Success, File \"decrypted.txt\" has been created");
+                    ProgramLoop();
                 }
-                else if(choice == 3)
+                else if (choice == 3)
                 {
-                    if (file.Exists)
-                    {
-                        var read = new Cipher(file);
-                        read.ReadFile();
-                        
-                    }
-
+                    var read = new Cipher(CurrentFile);
+                    read.ReadFile();
+                    ProgramLoop();
                 }
-                else { Console.WriteLine("404"); }  
+                else if (choice == 4)
+                {
+                    ChangeFile();
+                    ProgramLoop();
+                }
+                else if (choice == 5)
+                {
+                    ChangeDir();
+                    ProgramLoop();
+                }
+                else if (choice == 99)
+                {
+                    
+                }
+                else { Console.WriteLine("404"); }
+            }
+            else { Console.WriteLine("404"); }
+
+
+        }
+
+        
 
 
 
 
 
-            
-           
-        }       
+
 
 
     }

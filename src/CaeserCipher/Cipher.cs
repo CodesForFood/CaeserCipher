@@ -33,6 +33,9 @@ namespace CaeserCipher
 
         }
 
+
+
+
         //takes a line as string and changes each char 
         //change char first
         //change each char in line
@@ -49,7 +52,7 @@ namespace CaeserCipher
                 foreach (var line in FileLines)
                 {
                     changedLine = EncryptLine(line);
-                    Console.WriteLine(changedLine);
+                    //Console.WriteLine(changedLine);//shows to console
                     writer.WriteLine(changedLine);
                     //Im here trying to write the encryption to the txt file 
                 }
