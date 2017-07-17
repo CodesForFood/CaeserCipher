@@ -14,7 +14,7 @@ namespace CaeserCipher
         string OpenedFile { get; set; }
         
 
-        public Key(FileInfo inFile) : base(inFile)
+        public Key(FileInfo inFile)
         {
             OpenFile(inFile);
         }
