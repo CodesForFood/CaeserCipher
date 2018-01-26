@@ -6,6 +6,6 @@ It can take in a text file and encrypt or decrypt the file.
 It's a portfolio project.
 Poor UI but it works.
 
-Working on better UI, refactoring, and error handling.
+
 
 
