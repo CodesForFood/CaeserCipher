@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using CaeserCipher.MainFolder;
 
 namespace CaeserCipher
 {
@@ -13,22 +14,15 @@ namespace CaeserCipher
         //encrypt and decrypt
         //load de/encrypted files
         //Break each sentence and restruct
-
-        
-
-       
-   
-
-
-
-
-
-
-
+                  
         static void Main(string[] args)
         {
 
-            new Cipher();
+            DirFile dirFile = new DirFile();
+
+            Cipher cipher = new Cipher(dirFile.MainFile);
+
+            cipher.ShowMenu();
 
         }
 
